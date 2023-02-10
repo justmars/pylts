@@ -1,7 +1,6 @@
 import subprocess
 from pathlib import Path
 
-import click
 from loguru import logger
 from pydantic import BaseSettings, Field, ValidationError
 
@@ -28,9 +27,14 @@ class AmazonS3(BaseSettings):
         regex=r"^s3:\/\/.*$",
         max_length=100,
     )
+    folder: Path = Field(
+        default=Path(__file__).parent.parent / "data",
+        title="Local path to store the database",
+        description="Should be a folder in the root /data path",
+    )
     db: str = Field(
         default="db.sqlite",
-        title="Database Path",
+        title="Database File",
         description="Where the database will reside in the client.",
         env="DB_SQLITE",
         regex=r"^[a-z]{1,20}.*\.(sqlite|db)$",
@@ -43,9 +47,8 @@ class AmazonS3(BaseSettings):
 
     @property
     def dbpath(self) -> Path:
-        folder = Path(__file__).parent.parent / "data"
-        folder.mkdir(exist_ok=True)
-        return folder / self.db
+        self.folder.mkdir(exist_ok=True)
+        return self.folder / self.db
 
     def delete(self):
         logger.warning(f"Deleting {self.dbpath=}")
@@ -81,32 +84,6 @@ class AmazonS3(BaseSettings):
 
 
 try:
-    lts = AmazonS3()
+    litestream = AmazonS3()
 except ValidationError as e:
     raise Exception(f"Missing fields; see {e=}")
-
-
-@click.command()
-def aws_restore_db():
-    """Wrapper around litestream to download a copy of the database from a
-    preconfigured bucket in AWS. This assumes secrets have been previously set.
-    """
-    lts.delete()
-    lts.restore()
-
-
-@click.command()
-def aws_replicate_db():
-    """Wrapper around litestream to create a copy of the database to a
-    preconfigured bucket in AWS. This assumes secrets have been previously set.
-    """
-    lts.replicate()
-
-
-@click.group()
-def group():
-    pass
-
-
-group.add_command(aws_restore_db)
-group.add_command(aws_replicate_db)

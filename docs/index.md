@@ -21,7 +21,7 @@ LITESTREAM_SECRET_ACCESS_KEY | See how this is generated in chosen bucket
 REPLICA_URL | Where to get the replica for restoration and replication, e.g. in aws: `s3://<bucket_name>/><folder>`
 DB_SQLITE | Optional, if not set _db.sqlite_, will be placed in a `/data/db.sqlite`
 
-### .venv
+### In virtual env
 
 ```sh
 poetry add pylts # install
@@ -31,16 +31,54 @@ export LITESTREAM_SECRET_ACCESS_KEY=yyy
 export REPLICA_URL=s3://x/x.db
 ```
 
-## Commands
+## Set local folder
+
+```py
+>>> from pylts import AmazonS3
+>>> from pathlib import Path
+>>> stream = AmazonS3(folder=Path().cwd() / "data") # default will be the parent of /pylts
+>>> stream.dbpath
+PosixPath('.../pylts/data/db.sqlite')
+>>> stream
+```
+
+## API
 
 ### Restore
+
+Download the database in the folder specified from the replica url `s3://`
+
+```py
+>>> stream.restore()
+```
+
+### Delete
+
+Delete the database in the folder specified.
+
+```py
+>>> stream.delete() # used prior to restoration
+```
+
+
+### Replicate
+
+Ypload the database in the replica url `s3://`
+
+```py
+>>> stream.replicate() # will
+```
+
+## CLI
+
+### CLI Restore
 
 ```sh
 # set secrets first
 python -m pylts aws-restore-db
 ```
 
-### Replicate
+### CLI Replicate
 
 ```sh
 # set secrets first

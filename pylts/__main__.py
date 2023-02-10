@@ -1,3 +1,3 @@
-from .aws import group
+from .cli import group
 
 group()

@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pylts"
 description = "Pydantic wrapper around litestream for AWS buckets"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["Marcelino G. Veloso III <mars@veloso.one>"]
 readme = "README.md"
 license = "MIT"
@@ -13,6 +13,7 @@ classifiers = [
   "Typing :: Typed",
   "Development Status :: 4 - Beta",
   "Framework :: Pytest",
+  "Framework :: Pydantic",
 ]
 
 [tool.poetry.dependencies]
