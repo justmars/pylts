@@ -340,21 +340,6 @@
   
 
     
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="gotchas.md" class="md-nav__link">
-        Gotchas
-      </a>
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -481,26 +466,26 @@
 </thead>
 <tbody>
 <tr>
-<td align="right"><code>LITESTREAM_ACCESS_KEY_ID</code></td>
+<td align="right">LITESTREAM_ACCESS_KEY_ID</td>
 <td align="left">See how this is generated in chosen bucket</td>
 </tr>
 <tr>
-<td align="right"><code>LITESTREAM_SECRET_ACCESS_KEY</code></td>
+<td align="right">LITESTREAM_SECRET_ACCESS_KEY</td>
 <td align="left">See how this is generated in chosen bucket</td>
 </tr>
 <tr>
-<td align="right"><code>REPLICA_URL</code></td>
+<td align="right">REPLICA_URL</td>
 <td align="left">Where to get the replica for restoration and replication, e.g. in aws: <code>s3://&lt;bucket_name&gt;/&gt;&lt;folder&gt;</code></td>
 </tr>
 <tr>
-<td align="right"><code>DB_SQLITE</code></td>
+<td align="right">DB_SQLITE</td>
 <td align="left">Optional, if not set <em>db.sqlite</em>, will be placed in a <code>/data/db.sqlite</code></td>
 </tr>
 </tbody>
 </table>
 <h3 id="venv">.venv</h3>
 <div class="highlight"><span class="filename">Bash</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>poetry<span class="w"> </span>add<span class="w"> </span>pylts<span class="w"> </span><span class="c1"># install</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>poetry<span class="w"> </span>shell<span class="w"> </span><span class="c1"># enter shell</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>poetry<span class="w"> </span>shell<span class="w"> </span><span class="c1"># enter shell / virtual environment to set up secrets in local dev</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LITESTREAM_ACCESS_KEY_ID</span><span class="o">=</span>xxx
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LITESTREAM_SECRET_ACCESS_KEY</span><span class="o">=</span>yyy
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">REPLICA_URL</span><span class="o">=</span>s3://x/x.db
