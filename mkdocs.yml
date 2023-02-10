@@ -2,7 +2,7 @@ site_name: pylts Docs
 site_description: Pydantic wrapper around litestream"
 site_url: https://mv3.dev
 site_author: Marcelino Veloso III
-repo_url: https://github.com/pylts
+repo_url: https://github.com/justmars/pylts
 theme:
   name: "material"
   palette:
