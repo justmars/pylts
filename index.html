@@ -287,8 +287,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#venv" class="md-nav__link">
-    .venv
+  <a href="#in-virtual-env" class="md-nav__link">
+    In virtual env
   </a>
   
 </li>
@@ -299,11 +299,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
-    Commands
+  <a href="#set-local-folder" class="md-nav__link">
+    Set local folder
   </a>
   
-    <nav class="md-nav" aria-label="Commands">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    API
+  </a>
+  
+    <nav class="md-nav" aria-label="API">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -314,8 +321,42 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    Delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#replicate" class="md-nav__link">
     Replicate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    CLI
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cli-restore" class="md-nav__link">
+    CLI Restore
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli-replicate" class="md-nav__link">
+    CLI Replicate
   </a>
   
 </li>
@@ -382,8 +423,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#venv" class="md-nav__link">
-    .venv
+  <a href="#in-virtual-env" class="md-nav__link">
+    In virtual env
   </a>
   
 </li>
@@ -394,11 +435,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
-    Commands
+  <a href="#set-local-folder" class="md-nav__link">
+    Set local folder
   </a>
   
-    <nav class="md-nav" aria-label="Commands">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    API
+  </a>
+  
+    <nav class="md-nav" aria-label="API">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -409,8 +457,42 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    Delete
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#replicate" class="md-nav__link">
     Replicate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    CLI
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cli-restore" class="md-nav__link">
+    CLI Restore
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli-replicate" class="md-nav__link">
+    CLI Replicate
   </a>
   
 </li>
@@ -483,21 +565,42 @@
 </tr>
 </tbody>
 </table>
-<h3 id="venv">.venv</h3>
+<h3 id="in-virtual-env">In virtual env</h3>
 <div class="highlight"><span class="filename">Bash</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>poetry<span class="w"> </span>add<span class="w"> </span>pylts<span class="w"> </span><span class="c1"># install</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>poetry<span class="w"> </span>shell<span class="w"> </span><span class="c1"># enter shell / virtual environment to set up secrets in local dev</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LITESTREAM_ACCESS_KEY_ID</span><span class="o">=</span>xxx
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LITESTREAM_SECRET_ACCESS_KEY</span><span class="o">=</span>yyy
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">REPLICA_URL</span><span class="o">=</span>s3://x/x.db
 </code></pre></div>
-<h2 id="commands">Commands</h2>
+<h2 id="set-local-folder">Set local folder</h2>
+<div class="highlight"><span class="filename">Python</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pylts</span> <span class="kn">import</span> <span class="n">AmazonS3</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">AmazonS3</span><span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span> <span class="c1"># default will be the parent of /pylts</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">dbpath</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">PosixPath</span><span class="p">(</span><span class="s1">&#39;.../pylts/data/db.sqlite&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">stream</span>
+</code></pre></div>
+<h2 id="api">API</h2>
 <h3 id="restore">Restore</h3>
-<div class="highlight"><span class="filename">Bash</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># set secrets first</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pylts<span class="w"> </span>aws-restore-db
+<p>Download the database in the folder specified from the replica url <code>s3://</code></p>
+<div class="highlight"><span class="filename">Python</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="delete">Delete</h3>
+<p>Delete the database in the folder specified.</p>
+<div class="highlight"><span class="filename">Python</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span> <span class="c1"># used prior to restoration</span>
 </code></pre></div>
 <h3 id="replicate">Replicate</h3>
-<div class="highlight"><span class="filename">Bash</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># set secrets first</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pylts<span class="w"> </span>aws-replicate-db
+<p>Ypload the database in the replica url <code>s3://</code></p>
+<div class="highlight"><span class="filename">Python</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">replicate</span><span class="p">()</span> <span class="c1"># will</span>
+</code></pre></div>
+<h2 id="cli">CLI</h2>
+<h3 id="cli-restore">CLI Restore</h3>
+<div class="highlight"><span class="filename">Bash</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># set secrets first</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pylts<span class="w"> </span>aws-restore-db
+</code></pre></div>
+<h3 id="cli-replicate">CLI Replicate</h3>
+<div class="highlight"><span class="filename">Bash</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># set secrets first</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pylts<span class="w"> </span>aws-replicate-db
 </code></pre></div>
 <h2 id="dockerfile">Dockerfile</h2>
 <table>
@@ -526,15 +629,15 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><span class="filename">Bash</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LITESTREAM_ACCESS_KEY_ID</span><span class="o">=</span>xxx
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LITESTREAM_SECRET_ACCESS_KEY</span><span class="o">=</span>yyy
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">REPLICA_URL</span><span class="o">=</span>s3://x/x.db
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>poetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>-f<span class="w"> </span>requirements.txt<span class="w"> </span>-o<span class="w"> </span>requirements.txt<span class="w"> </span>--without-hashes
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>docker<span class="w"> </span>build<span class="w"> </span>.
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>docker<span class="w"> </span>run<span class="w"> </span>it<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span>-e<span class="w"> </span>LITESTREAM_ACCESS_KEY_ID<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span>-e<span class="w"> </span>LITESTREAM_SECRET_ACCESS_KEY<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span>-e<span class="w"> </span>REPLICA_URL
+<div class="highlight"><span class="filename">Bash</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LITESTREAM_ACCESS_KEY_ID</span><span class="o">=</span>xxx
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LITESTREAM_SECRET_ACCESS_KEY</span><span class="o">=</span>yyy
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">REPLICA_URL</span><span class="o">=</span>s3://x/x.db
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>poetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>-f<span class="w"> </span>requirements.txt<span class="w"> </span>-o<span class="w"> </span>requirements.txt<span class="w"> </span>--without-hashes
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>docker<span class="w"> </span>build<span class="w"> </span>.
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>docker<span class="w"> </span>run<span class="w"> </span>it<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span>-e<span class="w"> </span>LITESTREAM_ACCESS_KEY_ID<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span>-e<span class="w"> </span>LITESTREAM_SECRET_ACCESS_KEY<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span>-e<span class="w"> </span>REPLICA_URL
 </code></pre></div>
 
 
