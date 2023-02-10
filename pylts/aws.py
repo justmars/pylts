@@ -3,7 +3,7 @@ from pathlib import Path
 
 import click
 from loguru import logger
-from pydantic import BaseSettings, Field
+from pydantic import BaseSettings, Field, ValidationError
 
 
 class AmazonS3(BaseSettings):
@@ -80,7 +80,10 @@ class AmazonS3(BaseSettings):
         )
 
 
-lts = AmazonS3()
+try:
+    lts = AmazonS3()
+except ValidationError as e:
+    raise Exception(f"Missing fields; see {e=}")
 
 
 @click.command()
