@@ -19,7 +19,7 @@ Secret | Description
 LITESTREAM_ACCESS_KEY_ID | See how this is generated in chosen bucket
 LITESTREAM_SECRET_ACCESS_KEY | See how this is generated in chosen bucket
 REPLICA_URL | Where to get the replica for restoration and replication, e.g. in aws: `s3://<bucket_name>/><folder>`
-DB_SQLITE | Optional, if not set _db.sqlite_, will be placed in a `/data/db.sqlite`
+DB_SQLITE | Optional, Default: _db.sqlite_.
 
 ### In virtual env
 
@@ -31,9 +31,12 @@ export LITESTREAM_SECRET_ACCESS_KEY=yyy
 export REPLICA_URL=s3://x/x.db
 ```
 
-## Set local folder
+## Reference
+
+### Set local folder
 
 ```py
+# Assumes secrets already set
 >>> from pylts import AmazonS3
 >>> from pathlib import Path
 >>> stream = AmazonS3(folder=Path().cwd() / "data") # default will be the parent of /pylts
@@ -41,8 +44,6 @@ export REPLICA_URL=s3://x/x.db
 PosixPath('.../pylts/data/db.sqlite')
 >>> stream
 ```
-
-## API
 
 ### Restore
 
