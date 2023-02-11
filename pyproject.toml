@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pylts"
-description = "Pydantic wrapper around litestream for AWS buckets"
+description = "Pydantic wrapper around litestream for AWS buckets."
 version = "0.0.3"
 authors = ["Marcelino G. Veloso III <mars@veloso.one>"]
 readme = "README.md"
@@ -34,7 +34,6 @@ jupyter = "^1.0.0"
 mkdocs = "^1.4.2"
 mkdocstrings = { extras = ["python"], version = "^0.20.0" }
 mkdocs-material = "^9.0.9"
-
 
 [tool.pytest]
 minversion = "7.2"

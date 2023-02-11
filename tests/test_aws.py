@@ -2,12 +2,12 @@ from pathlib import Path
 
 import pytest
 
-from pylts.aws import AmazonS3
+from pylts.aws import ConfigS3
 
 
 @pytest.fixture()
 def aws_litestream():
-    return AmazonS3(key="key", token="token", s3="s3://test/db")
+    return ConfigS3(key="key", token="token", s3="s3://test/db")
 
 
 @pytest.fixture()

@@ -1,107 +1,13 @@
 # pylts Docs
 
-Limited pydantic wrapper over [litestream](https://litestream.io/) so that AWS litestream commands can be used as a subprocess of python scripts.
+A thin, reusable [pydantic](https://docs.pydantic.dev) wrapper over [litestream](https://litestream.io/)
+applied specifically to an AWS bucket.
 
-## Create an AWS bucket
+This makes it easier to use / model litestream inside a python script.
 
-Follow [instructions](https://litestream.io/guides/s3/) to get:
+It works by adding relevant fields to an `.env` file that are associated with an AWS bucket for
+restoration and replication.
 
-1. S3 Key ID
-2. S3 Secret Key
-3. S3 Replica URL
+## Configuration
 
-## Set secrets
-
-Secrets must be set in an `.env` file:
-
-Secret | Description
---:|:--
-LITESTREAM_ACCESS_KEY_ID | See how this is generated in chosen bucket
-LITESTREAM_SECRET_ACCESS_KEY | See how this is generated in chosen bucket
-REPLICA_URL | Where to get the replica for restoration and replication, e.g. in aws: `s3://<bucket_name>/><folder>`
-DB_SQLITE | Optional, Default: _db.sqlite_.
-
-### In virtual env
-
-```sh
-poetry add pylts # install
-poetry shell # enter shell / virtual environment to set up secrets in local dev
-export LITESTREAM_ACCESS_KEY_ID=xxx
-export LITESTREAM_SECRET_ACCESS_KEY=yyy
-export REPLICA_URL=s3://x/x.db
-```
-
-## Reference
-
-### Set local folder
-
-```py
-# Assumes secrets already set
->>> from pylts import AmazonS3
->>> from pathlib import Path
->>> stream = AmazonS3(folder=Path().cwd() / "data") # default will be the parent of /pylts
->>> stream.dbpath
-PosixPath('.../pylts/data/db.sqlite')
->>> stream
-```
-
-### Restore
-
-Download the database in the folder specified from the replica url `s3://`
-
-```py
->>> stream.restore()
-```
-
-### Delete
-
-Delete the database in the folder specified.
-
-```py
->>> stream.delete() # used prior to restoration
-```
-
-
-### Replicate
-
-Ypload the database in the replica url `s3://`
-
-```py
->>> stream.replicate() # will
-```
-
-## CLI
-
-### CLI Restore
-
-```sh
-# set secrets first
-python -m pylts aws-restore-db
-```
-
-### CLI Replicate
-
-```sh
-# set secrets first
-python -m pylts aws-replicate-db
-```
-
-## Dockerfile
-
-Elements | Version | Version List
---:|:--|--:
-python | `3.11.1` | [versions](https://www.python.org/downloads/)
-litestream | `0.3.9` | [versions](https://github.com/benbjohnson/litestream/releases)
-sqlite | `3.40.1` | [versions](https://www.sqlite.org/download.html)
-
-```sh
-export LITESTREAM_ACCESS_KEY_ID=xxx
-export LITESTREAM_SECRET_ACCESS_KEY=yyy
-export REPLICA_URL=s3://x/x.db
-poetry export -f requirements.txt -o requirements.txt --without-hashes
-docker build .
-docker run it \
-  -e LITESTREAM_ACCESS_KEY_ID \
-  -e LITESTREAM_SECRET_ACCESS_KEY \
-  -e REPLICA_URL
-```
+::: pylts.aws.ConfigS3

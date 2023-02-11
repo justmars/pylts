@@ -45,4 +45,4 @@ jobs:
           LITESTREAM_ACCESS_KEY_ID: sample_key
           LITESTREAM_SECRET_ACCESS_KEY: sample_access
           REPLICA_URL: s3://test/x
-        run: poetry run pytest
+        run: poetry run pytest --doctest-modules -vv

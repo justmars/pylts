@@ -20,6 +20,9 @@ theme:
         name: Switch to light mode
 nav:
   - Overview: index.md
+  - Litestream AWS API: api.md
+  - CLI sample: cli.md
+  - Dockerfile Sample: docker.md
 
 extra:
   social:

@@ -1,10 +1,8 @@
 # syntax=docker/dockerfile:1.2
 FROM python:3.11.1-slim-bullseye
 ENV PYTHONDONTWRITEBYTECODE=1 \
-  PYTHONUNBUFFERED=1 \
-  LD_LIBRARY_PATH=/usr/local/lib
+  PYTHONUNBUFFERED=1
 
-# Add base libraries
 RUN apt update && apt install -y build-essential wget pkg-config git && apt clean
 
 ARG LITESTREAM_VER=0.3.9
