@@ -1,5 +1,7 @@
+import datetime
 import subprocess
 from pathlib import Path
+from subprocess import PIPE, Popen, TimeoutExpired
 
 from loguru import logger
 from pydantic import BaseSettings, Field
@@ -89,6 +91,32 @@ class ConfigS3(BaseSettings):
         self.folder.mkdir(exist_ok=True)
         return self.folder / self.db
 
+    @property
+    def replicate_args(self):
+        return [
+            "litestream",
+            "replicate",
+            str(self.dbpath),  # path to loca
+            self.s3,  # where to replicate
+        ]
+
+    def replicate(self) -> Path:
+        return self.run(self.replicate_args)
+
+    @property
+    def restore_args(self):
+        return [
+            "litestream",
+            "restore",
+            "-v",  # verbose
+            "-o",  # output
+            f"{str(self.dbpath)}",  # output path
+            self.s3,  # source of restore
+        ]
+
+    def restore(self) -> Path:
+        return self.run(run_args=self.restore_args)
+
     def delete(self):
         logger.warning(f"Deleting {self.dbpath=}")
         self.dbpath.unlink(missing_ok=True)
@@ -99,24 +127,33 @@ class ConfigS3(BaseSettings):
         logger.debug(subprocess.run(run_args, capture_output=True))
         return self.dbpath
 
-    def restore(self) -> Path:
-        return self.run(
-            run_args=[
-                "litestream",
-                "restore",
-                "-v",  # verbose
-                "-o",  # output
-                f"{str(self.dbpath)}",  # output path
-                self.s3,  # source of restore
-            ],
-        )
+    def output(self, cmd: list[str], timeout: int) -> tuple[str, str]:
+        p = Popen(cmd, text=True, stdout=PIPE, stderr=PIPE)
+        try:
+            logger.info(f"Output: {cmd=}")
+            return p.communicate(timeout=timeout)
+        except TimeoutExpired:
+            logger.info(f"Timed Out: {cmd=}")
+            p.kill()
+            return p.communicate()
 
-    def replicate(self) -> Path:
-        return self.run(
-            run_args=[
-                "litestream",
-                "replicate",
-                str(self.dbpath),  # path to loca
-                self.s3,  # where to replicate
-            ]
-        )
+    def timed_replicate(self, timeout_seconds: int) -> bool:
+        """The replication process should be completed
+        within `timeout_seconds`; if successful, a snapshot
+        is written to the `s3` url and the local `@dbpath`
+        is deleted.
+
+        Args:
+            timeout_seconds (int): Number of seconds
+
+        Returns:
+            bool: Whether the replication was successfulw within `timeout_seconds`
+        """
+        res = self.output(self.replicate_args, timeout_seconds)
+        _, stderr_data = res[0], res[1]
+        for text in stderr_data.splitlines():
+            if "snapshot written" in text:
+                logger.success(f"Snapshot on {datetime.datetime.now()=}")
+                self.delete()
+                return True
+        return False

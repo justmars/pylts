@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pylts"
 description = "Pydantic wrapper around litestreamed database specific to an AWS bucket."
-version = "0.0.4"
+version = "0.0.5"
 authors = ["Marcelino G. Veloso III <mars@veloso.one>"]
 readme = "README.md"
 license = "MIT"
