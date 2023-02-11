@@ -2,7 +2,7 @@
 
 ![Github CI](https://github.com/justmars/pylts/actions/workflows/main.yml/badge.svg)
 
-Pydantic wrapper around litestream for AWS buckets.
+Pydantic wrapper around litestreamed database specific to an AWS bucket.
 
 ## Development
 
