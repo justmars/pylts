@@ -149,11 +149,14 @@ class ConfigS3(BaseSettings):
         Returns:
             bool: Whether the replication was successfulw within `timeout_seconds`
         """
+        logger.info(
+            f"Replication to {self.s3=} start: {datetime.datetime.now()=}"
+        )
         res = self.output(self.replicate_args, timeout_seconds)
         _, stderr_data = res[0], res[1]
         for text in stderr_data.splitlines():
             if "snapshot written" in text:
                 logger.success(f"Snapshot on {datetime.datetime.now()=}")
-                self.delete()
+                self.dbpath.unlink()
                 return True
         return False
