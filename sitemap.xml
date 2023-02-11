@@ -2,7 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://mv3.dev/</loc>
-         <lastmod>2023-02-10</lastmod>
+         <lastmod>2023-02-11</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mv3.dev/api/</loc>
+         <lastmod>2023-02-11</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mv3.dev/cli/</loc>
+         <lastmod>2023-02-11</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mv3.dev/docker/</loc>
+         <lastmod>2023-02-11</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

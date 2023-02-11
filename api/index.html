@@ -12,21 +12,27 @@
         <meta name="author" content="Marcelino Veloso III">
       
       
+        <link rel="canonical" href="https://mv3.dev/api/">
       
       
-      <link rel="icon" href="/assets/images/favicon.png">
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../cli/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
     
     
       
-        <title>pylts Docs</title>
+        <title>Litestream AWS API - pylts Docs</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/main.0d440cfe.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.0d440cfe.min.css">
       
         
-        <link rel="stylesheet" href="/assets/stylesheets/palette.2505c338.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
       
       
 
@@ -42,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="/assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -72,6 +78,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#litestream-aws-api" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -82,7 +93,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/." title="pylts Docs" class="md-header__button md-logo" aria-label="pylts Docs" data-md-component="logo">
+    <a href=".." title="pylts Docs" class="md-header__button md-logo" aria-label="pylts Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -101,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Litestream AWS API
             
           </span>
         </div>
@@ -200,7 +211,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/." title="pylts Docs" class="md-nav__button md-logo" aria-label="pylts Docs" data-md-component="logo">
+    <a href=".." title="pylts Docs" class="md-nav__button md-logo" aria-label="pylts Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -231,7 +242,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         Overview
       </a>
     </li>
@@ -244,11 +255,66 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="/api/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Litestream AWS API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Litestream AWS API
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#restore" class="md-nav__link">
+    Restore
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    Delete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replicate" class="md-nav__link">
+    Replicate
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -261,7 +327,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/cli/" class="md-nav__link">
+      <a href="../cli/" class="md-nav__link">
         CLI sample
       </a>
     </li>
@@ -276,7 +342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docker/" class="md-nav__link">
+      <a href="../docker/" class="md-nav__link">
         Dockerfile Sample
       </a>
     </li>
@@ -300,6 +366,37 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#restore" class="md-nav__link">
+    Restore
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    Delete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replicate" class="md-nav__link">
+    Replicate
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -311,8 +408,40 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+  
+  
+
+
+
+<h1 id="litestream-aws-api">Litestream AWS API</h1>
+<p>This requires an instantiated <a class="autorefs autorefs-internal" href="../#configuration">configuration</a>:</p>
+<div class="highlight"><span class="filename">Python</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">pylts</span> <span class="kn">import</span> <span class="n">ConfigS3</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">stream</span> <span class="o">=</span> <span class="n">ConfigS3</span><span class="p">()</span> <span class="c1"># uses .env and default folder/db</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing fields; see </span><span class="si">{</span><span class="n">e</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="restore">Restore</h2>
+<p>Download the database in <code>@dbpath</code> from the replica url <code>s3://</code></p>
+<div class="highlight"><span class="filename">Python</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span> <span class="c1"># equivalent to litestream restore ...</span>
+</code></pre></div>
+<h2 id="delete">Delete</h2>
+<p>Delete the database in the folder specified.</p>
+<div class="highlight"><span class="filename">Python</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span> <span class="c1"># used prior to restoration</span>
+</code></pre></div>
+<h2 id="replicate">Replicate</h2>
+<p>Upload the database in <code>@dbpath</code> to replica url <code>s3://</code></p>
+<div class="highlight"><span class="filename">Python</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">stream</span><span class="o">.</span><span class="n">replicate</span><span class="p">()</span> <span class="c1"># equivalent to litestream replicate ...</span>
+</code></pre></div>
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -370,10 +499,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "/", "features": [], "search": "/assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="/assets/javascripts/bundle.4b2c34cd.min.js"></script>
+      <script src="../assets/javascripts/bundle.4b2c34cd.min.js"></script>
       
     
   </body>
