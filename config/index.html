@@ -18,7 +18,7 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="../api/">
+        <link rel="next" href="../docker/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
@@ -422,23 +422,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/" class="md-nav__link">
-        Litestream AWS API
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../docker/" class="md-nav__link">
-        How setup in Dockerfile
+        Dockerfile Setup
       </a>
     </li>
   
@@ -626,11 +611,11 @@
 </ol>
 <h5 id="pylts.aws.ConfigS3--env">.env</h5>
 <p>The necessary fields to declare in <code>.env</code> are:</p>
-<ol>
-<li><code>LITESTREAM_ACCESS_KEY_ID</code>,</li>
+<ul>
+<li><code>LITESTREAM_ACCESS_KEY_ID</code></li>
 <li><code>LITESTREAM_SECRET_ACCESS_KEY</code></li>
-<li><code>REPLICA_URL</code>.</li>
-</ol>
+<li><code>REPLICA_URL</code></li>
+</ul>
 <h5 id="pylts.aws.ConfigS3--replica-url">Replica URL</h5>
 <p>The <em>replica url</em> is the s3 bucket that will host the sqlite database,
 i.e. the db will be replicated here or the db will be restored from here.</p>
@@ -1008,9 +993,9 @@ this path:</p>
 <a id="__codelineno-0-21" name="__codelineno-0-21"></a>
 <a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="sd">    The necessary fields to declare in `.env` are:</span>
 <a id="__codelineno-0-23" name="__codelineno-0-23"></a>
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="sd">    1. `LITESTREAM_ACCESS_KEY_ID`,</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="sd">    2. `LITESTREAM_SECRET_ACCESS_KEY`</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="sd">    3. `REPLICA_URL`.</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="sd">    - `LITESTREAM_ACCESS_KEY_ID`</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="sd">    - `LITESTREAM_SECRET_ACCESS_KEY`</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="sd">    - `REPLICA_URL`</span>
 <a id="__codelineno-0-27" name="__codelineno-0-27"></a>
 <a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="sd">    ## Replica URL</span>
 <a id="__codelineno-0-29" name="__codelineno-0-29"></a>
