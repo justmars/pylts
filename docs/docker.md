@@ -1,5 +1,7 @@
 # Dockerfile Sample
 
+The steps included in the Dockerfile can be used as base example:
+
 Elements | Version | Version List
 --:|:--|--:
 python | `3.11.1` | [versions](https://www.python.org/downloads/)
@@ -17,6 +19,7 @@ RUN apt update && apt install -y build-essential wget pkg-config git && apt clea
 ## Litestream
 
 ```dockerfile
+# As of Feb 2023: latest version
 ARG LITESTREAM_VER=0.3.9
 ADD https://github.com/benbjohnson/litestream/releases/download/v$LITESTREAM_VER/litestream-v$LITESTREAM_VER-linux-amd64-static.tar.gz /tmp/litestream.tar.gz
 RUN tar -C /usr/local/bin -xzf /tmp/litestream.tar.gz
@@ -30,6 +33,7 @@ The version that comes with python isn't the most updated sqlite version, hence 
 configure with extensions:
 
 ```dockerfile
+# As of Feb 2023: latest version
 ARG SQLITE_YEAR=2022
 ARG SQLITE_VER=3400100
 RUN wget "https://www.sqlite.org/$SQLITE_YEAR/sqlite-autoconf-$SQLITE_VER.tar.gz" \

@@ -21,8 +21,8 @@ theme:
 nav:
   - Overview: index.md
   - Litestream AWS API: api.md
-  - CLI sample: cli.md
-  - Dockerfile Sample: docker.md
+  - When API used as CLI: cli.md
+  - How setup in Dockerfile: docker.md
 
 extra:
   social:
