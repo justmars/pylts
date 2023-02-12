@@ -274,6 +274,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    Steps
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
     Configuration
   </a>
@@ -352,7 +359,7 @@
   
     <li class="md-nav__item">
       <a href="cli/" class="md-nav__link">
-        CLI sample
+        When API used as CLI
       </a>
     </li>
   
@@ -367,7 +374,7 @@
   
     <li class="md-nav__item">
       <a href="docker/" class="md-nav__link">
-        Dockerfile Sample
+        How setup in Dockerfile
       </a>
     </li>
   
@@ -398,6 +405,13 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    Steps
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
@@ -467,10 +481,71 @@
 
 <h1 id="pylts-docs">pylts Docs</h1>
 <p>A thin, reusable <a href="https://docs.pydantic.dev">pydantic</a> wrapper over <a href="https://litestream.io/">litestream</a>
-applied specifically to an AWS bucket.</p>
-<p>This makes it easier to use / model litestream inside a python script.</p>
-<p>It works by adding relevant fields to an <code>.env</code> file that are associated with an AWS bucket for
-restoration and replication.</p>
+applied specifically to an s3 bucket.</p>
+<p>This makes it easier to use litestream inside a python script to handle the <em>replicate</em> and <em>restore</em> aspects of this flow:</p>
+<pre class="mermaid"><code>---
+title: From Local to Bucket to Production
+---
+flowchart LR
+  subgraph fly.io
+    volume
+    app
+  end
+  subgraph aws
+    s3(s3 bucket)--pylts restore volume--&gt;app
+  end
+  subgraph local
+    db--"litestream replicate (args)"--&gt;s3
+    code--fly deploy--&gt;app
+  end</code></pre>
+<table>
+<thead>
+<tr>
+<th align="right">Environment</th>
+<th align="left">Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">local</td>
+<td align="left">Set up <em>repo</em> with a <em>sqlite.db</em> (<code>db</code>)</td>
+</tr>
+<tr>
+<td align="right">local</td>
+<td align="left">With <code>pydantic</code>-parsed values, <code>litestream replicate</code> this created <code>db</code> to <code>s3</code></td>
+</tr>
+<tr>
+<td align="right">local</td>
+<td align="left">Deploy the <em>repo</em> to <code>fly.io</code></td>
+</tr>
+<tr>
+<td align="right">prod</td>
+<td align="left">Pydantically restore <code>db</code> from <code>s3</code> to <code>fly.io</code></td>
+</tr>
+</tbody>
+</table>
+<p>The database that is (re)stored in the volume (fly.io) may be updated either by cron jobs or by adding, deleting entries directly. How do we ensure these updates are persisted to the s3 bucket?</p>
+<pre class="mermaid"><code>---
+title: From Production to Bucket to Local
+---
+flowchart LR
+  subgraph fly.io
+    volume
+    app
+  end
+  subgraph aws
+    app--pylts replicate volume--&gt;s3
+  end
+  subgraph local
+    s3--"litestream restore (args)"--&gt;db
+    code
+  end</code></pre>
+<h2 id="steps">Steps</h2>
+<ol>
+<li>Add fields from s3 bucket to <code>.env</code></li>
+<li><code>.env</code> picked up by Pydantic BaseSettings model</li>
+<li>Python subprocesses to litestream replicate/restore use BaseSettings</li>
+</ol>
 <h2 id="configuration">Configuration</h2>
 
 
