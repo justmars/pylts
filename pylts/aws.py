@@ -21,9 +21,9 @@ class ConfigS3(BaseSettings):
 
     The necessary fields to declare in `.env` are:
 
-    1. `LITESTREAM_ACCESS_KEY_ID`,
-    2. `LITESTREAM_SECRET_ACCESS_KEY`
-    3. `REPLICA_URL`.
+    - `LITESTREAM_ACCESS_KEY_ID`
+    - `LITESTREAM_SECRET_ACCESS_KEY`
+    - `REPLICA_URL`
 
     ## Replica URL
 

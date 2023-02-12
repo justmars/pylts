@@ -21,8 +21,7 @@ theme:
 nav:
   - Overview: index.md
   - Config: config.md
-  - Litestream AWS API: api.md
-  - How setup in Dockerfile: docker.md
+  - Dockerfile Setup: docker.md
 
 extra:
   homepage: https://mv3.dev

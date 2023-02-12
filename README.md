@@ -6,7 +6,7 @@ Pydantic wrapper around litestreamed database specific to an AWS bucket.
 
 ## Development
 
-See [documentation](https://justmars.github.io/pylts).
+See [documentation](https://mv3.dev/pylts).
 
 1. Run `poetry shell`
 2. Run `poetry update`
