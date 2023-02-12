@@ -20,8 +20,8 @@ theme:
         name: Switch to light mode
 nav:
   - Overview: index.md
+  - Config: config.md
   - Litestream AWS API: api.md
-  - When API used as CLI: cli.md
   - How setup in Dockerfile: docker.md
 
 extra:

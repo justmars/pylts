@@ -1,3 +1,0 @@
-# Sample CLI
-
-::: pylts.cli

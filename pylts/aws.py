@@ -1,29 +1,64 @@
 import datetime
 import subprocess
 from pathlib import Path
-from subprocess import PIPE, Popen, TimeoutExpired
+from subprocess import PIPE, CompletedProcess, Popen, TimeoutExpired
 
 from loguru import logger
 from pydantic import BaseSettings, Field
 
 
 class ConfigS3(BaseSettings):
-    """Generate a configuration instance to determine how to access the _replica url_ and
-    where to place the _local db_ from such url.
+    """
+    # ConfigS3
 
-    ## Replica url
+    ## Flow
 
-    Follow [instructions](https://litestream.io/guides/s3/) to get:
+    1. Add fields from s3 bucket to `.env`
+    2. `.env` picked up by Pydantic `BaseSettings` model `ConfigS3`
+    3. Python subprocesses to litestream replicate/restore will based on `ConfigS3`
+
+    ## .env
+
+    The necessary fields to declare in `.env` are:
+
+    1. `LITESTREAM_ACCESS_KEY_ID`,
+    2. `LITESTREAM_SECRET_ACCESS_KEY`
+    3. `REPLICA_URL`.
+
+    ## Replica URL
+
+    The _replica url_ is the s3 bucket that will host the sqlite database,
+    i.e. the db will be replicated here or the db will be restored from here.
+
+    For AWS, the replica url is formatted likeso: `s3://<bucket_name>/<path>`.
+
+    To create the bucket, follow [litestream instructions](https://litestream.io/guides/s3/).
+    This results in some values that we can use to create the `ConfigS3` instance:
 
     Field | Type | Description | Declare in .env
     --:|:--:|:--|:--
     key | str | Access Key | `LITESTREAM_ACCESS_KEY_ID`
     token | str | Secret Token | `LITESTREAM_SECRET_ACCESS_KEY`
-    s3 | str | e.g. `s3://<bucket_name>/>/<folder>` | `REPLICA_URL`
+    s3 | str | Bucket URL | `REPLICA_URL`
+
+    Note that these values can/should be declared in the `.env` file:
+
+    ```sh
+    # contents of .env
+    LITESTREAM_ACCESS_KEY_ID=xxx
+    LITESTREAM_SECRET_ACCESS_KEY=yyy
+    REPLICA_URL=s3://zzz/db
+    ```
+
+    The configuration ensures that we can create a subprocess that is authorized
+    to perform actions with the _replica url_.
 
     ## Local db
 
-    There are two fields that can be declared affecting the local database path
+    The subprocesses involve a path to the database.
+
+    There are two fields that can be declared in the configuration that can affect
+    this path:
 
     Field | Type | Description
     --:|:--:|:-
@@ -35,6 +70,7 @@ class ConfigS3(BaseSettings):
     Examples:
         >>> from pylts import ConfigS3
         >>> from pathlib import Path
+        >>> # The key, token, s3 are usually just set up in an .env file. They're included here for testing purposes. The folder however is advised to be explicitly declared
         >>> stream = ConfigS3(key="xxx", token="yyy", s3="s3://x/x.db", folder=Path().cwd() / "data")
         >>> stream
         ConfigS3(s3='s3://x/x.db', db='db.sqlite')
@@ -88,11 +124,42 @@ class ConfigS3(BaseSettings):
 
     @property
     def dbpath(self) -> Path:
+        """Examples:
+            >>> from pylts import ConfigS3
+            >>> from pathlib import Path
+            >>> # The key, token, s3 are usually just set up in an .env file. They're included here for testing purposes. The folder however is advised to be explicitly declared
+            >>> stream = ConfigS3(key="xxx", token="yyy", s3="s3://x/x.db", folder=Path().cwd() / "data")
+            >>> stream.dbpath == Path().cwd() / "data" / "db.sqlite" # Automatic construction of default db name
+            True
+
+        Returns:
+            Path: Where the database will be located locally.
+        """  # noqa: E501
         self.folder.mkdir(exist_ok=True)
         return self.folder / self.db
 
     @property
-    def replicate_args(self):
+    def replicate_args(self) -> list[str]:
+        """When used in the command line `litestream replicate <dbpath> <replica_url>`
+        works. As a subprocess, we itemize each item for future use.
+
+        Examples:
+            >>> from pylts import ConfigS3
+            >>> from pathlib import Path
+            >>> # The key, token, s3 are usually just set up in an .env file. They're included here for testing purposes. The folder however is advised to be explicitly declared
+            >>> stream = ConfigS3(key="xxx", token="yyy", s3="s3://x/x.db", folder=Path().cwd() / "data")
+            >>> args = stream.replicate_args
+            >>> isinstance(stream.replicate_args, list)
+            True
+            >>> args[0] == "litestream"
+            True
+            >>> args[1] == "replicate"
+            True
+            >>> args[2] == str(stream.dbpath)
+            True
+            >>> args[3] == stream.s3
+            True
+        """  # noqa: E501
         return [
             "litestream",
             "replicate",
@@ -100,11 +167,29 @@ class ConfigS3(BaseSettings):
             self.s3,  # where to replicate
         ]
 
-    def replicate(self) -> Path:
-        return self.run(self.replicate_args)
-
     @property
-    def restore_args(self):
+    def restore_args(self) -> list[str]:
+        """When used in the command line `litestream restore -o <dbpath> <replica_url>`
+        works. As a subprocess, we itemize each item for future use.
+
+        Examples:
+            >>> from pylts import ConfigS3
+            >>> from pathlib import Path
+            >>> # The key, token, s3 are usually just set up in an .env file. They're included here for testing purposes. The folder however is advised to be explicitly declared
+            >>> stream = ConfigS3(key="xxx", token="yyy", s3="s3://x/x.db", folder=Path().cwd() / "data")
+            >>> args = stream.restore_args
+            >>> isinstance(stream.restore_args, list)
+            True
+            >>> args[0] == "litestream"
+            True
+            >>> args[1] == "restore"
+            True
+            >>> args[-2] == str(stream.dbpath)
+            True
+            >>> args[-1] == stream.s3
+            True
+
+        """  # noqa: E501
         return [
             "litestream",
             "restore",
@@ -115,19 +200,49 @@ class ConfigS3(BaseSettings):
         ]
 
     def restore(self) -> Path:
-        return self.run(run_args=self.restore_args)
+        """Runs the pre-configured litestream command (`@restore_args`) to restore the
+        database from the replica url to the constructed database path at `@dbpath`.
+        No need to use a timeout here since after restoration, the command terminates.
+        This is unlike `self.timed_replicate()` which is continuously executed even
+        after replication.
+        """
+        cmd = {" ".join(self.restore_args)}
+        logger.info(f"Run: {cmd}")
+        proc: CompletedProcess = subprocess.run(
+            self.restore_args, capture_output=True
+        )
+        for line in proc.stderr.splitlines():
+            logger.debug(line)
+        return self.dbpath
 
     def delete(self):
+        """Deletes the file located at the constructed database path `@dbpath`.
+
+        Examples:
+            >>> from pylts import ConfigS3
+            >>> from pathlib import Path
+            >>> # The key, token, s3 are usually just set up in an .env file. They're included here for testing purposes. The folder however is advised to be explicitly declared
+            >>> stream = ConfigS3(key="xxx", token="yyy", s3="s3://x/x.db", folder=Path().cwd() / "data")
+            >>> stream.dbpath.exists()
+            True
+            >>> stream.delete()
+            >>> stream.dbpath.exists()
+            False
+
+        """  # noqa: E501
         logger.warning(f"Deleting {self.dbpath=}")
         self.dbpath.unlink(missing_ok=True)
 
-    def run(self, run_args: list[str]) -> Path:
-        cmd = {" ".join(run_args)}
-        logger.info(f"Run: {cmd}")
-        logger.debug(subprocess.run(run_args, capture_output=True))
-        return self.dbpath
+    def get_result_on_timeout(
+        self, cmd: list[str], timeout: int
+    ) -> tuple[str, str]:
+        """Returns results of a long-running process defined by `cmd` after the
+        expiration of the `timeout`. This is an adoption of the python sample [code](https://docs.python.org/3.11/library/subprocess.html#subprocess.Popen.communicate)
+        re: `Popen.communicate()`
 
-    def output(self, cmd: list[str], timeout: int) -> tuple[str, str]:
+        Because of the expiration of the timeout is an error, it falls into the second half of the
+        tuple of strings returned.
+        """  # noqa: E501
         p = Popen(cmd, text=True, stdout=PIPE, stderr=PIPE)
         try:
             logger.info(f"Output: {cmd=}")
@@ -138,25 +253,32 @@ class ConfigS3(BaseSettings):
             return p.communicate()
 
     def timed_replicate(self, timeout_seconds: int) -> bool:
-        """The replication process should be completed
-        within `timeout_seconds`; if successful, a snapshot
-        is written to the `s3` url and the local `@dbpath`
-        is deleted.
+        """Replication from litestream is a continuous, non-terminating command,
+        hence the need for `timed_replicate()` to ensure that we only
+        replicate a single time.
+
+        We enforce this rule by ensuring that the replication process performed
+        by `@replicate_args` should becompleted within `timeout_seconds`. Whether or not
+        a replication is done will determine the acts to be performed and the value of
+        the resulting boolean.
+
+        If replication is successful, a snapshot is written to the `s3` url and the
+        local `@dbpath` can be (and is) deleted.
 
         Args:
             timeout_seconds (int): Number of seconds
 
         Returns:
-            bool: Whether the replication was successfulw within `timeout_seconds`
+            bool: Whether the replication was successful within `timeout_seconds`
         """
         logger.info(
             f"Replication to {self.s3=} start: {datetime.datetime.now()=}"
         )
-        res = self.output(self.replicate_args, timeout_seconds)
-        _, stderr_data = res[0], res[1]
+        res = self.get_result_on_timeout(self.replicate_args, timeout_seconds)
+        _, stderr_data = res[0], res[1]  # stderr because of timeout err
         for text in stderr_data.splitlines():
-            if "snapshot written" in text:
+            if "snapshot written" in text:  # see litestream prompt
                 logger.success(f"Snapshot on {datetime.datetime.now()=}")
-                self.dbpath.unlink()
+                self.dbpath.unlink()  # delete the file after replication
                 return True
         return False

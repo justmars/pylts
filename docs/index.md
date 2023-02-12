@@ -1,9 +1,18 @@
 # pylts Docs
 
-A thin, reusable [pydantic](https://docs.pydantic.dev) wrapper over [litestream](https://litestream.io/)
-applied specifically to an s3 bucket.
+A thin, reusable [pydantic](https://docs.pydantic.dev) wrapper over _limited_ [litestream](https://litestream.io/) functions: makes it easier to use litestream inside a python script to handle the _replicate_ and _restore_ aspects of an sqlite database
+in an s3 bucket.
 
-This makes it easier to use litestream inside a python script to handle the _replicate_ and _restore_ aspects of this flow:
+```py
+>>> from pylts import ConfigS3
+>>> litestream = ConfigS3()
+>>> litestream.dbpath # local <db>
+>>> litestream.s3 # replica url in aws <s3>
+>>> litestream.restore() # equivalent to litestream restore -o <db> <s3>
+>>> litestream.timed_replicate() # equivalent to litestream replicate <db> <s3>
+```
+
+## Placement
 
 ```mermaid
 ---
@@ -30,6 +39,8 @@ local | With `pydantic`-parsed values, `litestream replicate` this created `db` 
 local | Deploy the _repo_ to `fly.io`
 prod | Pydantically restore `db` from `s3` to `fly.io`
 
+## Retrieval
+
 The database that is (re)stored in the volume (fly.io) may be updated either by cron jobs or by adding, deleting entries directly. How do we ensure these updates are persisted to the s3 bucket?
 
 ```mermaid
@@ -49,13 +60,3 @@ flowchart LR
     code
   end
 ```
-
-## Steps
-
-1. Add fields from s3 bucket to `.env`
-2. `.env` picked up by Pydantic BaseSettings model
-3. Python subprocesses to litestream replicate/restore use BaseSettings
-
-## Configuration
-
-::: pylts.aws.ConfigS3

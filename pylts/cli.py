@@ -23,19 +23,9 @@ def aws_restore_db():
     litestream.restore()
 
 
-@click.command()
-def aws_replicate_db():
-    """Wrapper around litestream to create a copy of the database to a
-    preconfigured bucket in AWS. This assumes secrets have been previously set.
-    Will now be usable as a CLI via `python -m pylts aws_replicate_db` for this app.
-    """
-    litestream.replicate()
-
-
 @click.group()
 def group():
     pass
 
 
 group.add_command(aws_restore_db)
-group.add_command(aws_replicate_db)
