@@ -1,9 +1,12 @@
 {
   "editor.fontLigatures": true,
-  "python.formatting.provider": "none",
   "[python]": {
+    "editor.formatOnSave": true,
     "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.formatOnSave": true
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports.ruff": true
+    },
   },
   "yaml.schemas": {
     "https://squidfunk.github.io/mkdocs-material/schema.json": "mkdocs.yml"

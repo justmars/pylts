@@ -113,7 +113,6 @@ class ConfigS3(BaseSettings):
         default="db.sqlite",
         title="Database File",
         description="Where db will reside in client.",
-        env="DB_SQLITE",
         regex=r"^[a-z]{1,20}.*\.(sqlite|db)$",
         max_length=50,
     )
@@ -206,6 +205,9 @@ class ConfigS3(BaseSettings):
         This is unlike `self.timed_replicate()` which is continuously executed even
         after replication.
         """
+        if self.dbpath.exists():
+            raise Exception(f"Remove output {self.dbpath=} before restore.")
+
         cmd = {" ".join(self.restore_args)}
         logger.info(f"Run: {cmd}")
         proc: CompletedProcess = subprocess.run(
@@ -216,22 +218,11 @@ class ConfigS3(BaseSettings):
         return self.dbpath
 
     def delete(self):
-        """Deletes the file located at the constructed database path `@dbpath`.
-
-        Examples:
-            >>> from pylts import ConfigS3
-            >>> from pathlib import Path
-            >>> # The key, token, s3 are usually just set up in an .env file. They're included here for testing purposes. The folder however is advised to be explicitly declared
-            >>> stream = ConfigS3(key="xxx", token="yyy", s3="s3://x/x.db", folder=Path().cwd() / "data")
-            >>> stream.dbpath.exists()
-            True
-            >>> stream.delete()
-            >>> stream.dbpath.exists()
-            False
-
-        """  # noqa: E501
-        logger.warning(f"Deleting {self.dbpath=}")
-        self.dbpath.unlink(missing_ok=True)
+        """Deletes db files located at the constructed database path `@dbpath`."""
+        base = str(self.dbpath)
+        for path_str in [base, f"{base}-shm", f"{base}-wal"]:
+            logger.warning(f"Deleting {path_str=}")
+            Path().joinpath(path_str).unlink(missing_ok=True)
 
     def get_result_on_timeout(
         self, cmd: list[str], timeout: int

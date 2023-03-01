@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pylts"
 description = "Pydantic wrapper around litestreamed database specific to an AWS bucket."
-version = "0.0.7"
+version = "0.0.8"
 authors = ["Marcelino G. Veloso III <mars@veloso.one>"]
 readme = "README.md"
 license = "MIT"
@@ -30,10 +30,10 @@ pytest = "^7.2"
 pytest-datadir = "^1.4.1"
 pytest-cov = "^2.12.1"
 pre-commit = "^2.21"
-jupyter = "^1.0.0"
 mkdocs = "^1.4.2"
 mkdocstrings = { extras = ["python"], version = "^0.20.0" }
-mkdocs-material = "^9.0.9"
+mkdocs-material = "^9.0.15"
+ipython = "^8.11.0"
 
 [tool.pytest]
 minversion = "7.2"
@@ -42,6 +42,8 @@ testpaths = ["tests"]
 
 [tool.ruff]
 ignore = ["F401"]
+fixable = ["F", "E", "W", "I001"]
+select = ["F", "E", "W", "I001"]
 
 [tool.black]
 target-version = ['py311']
