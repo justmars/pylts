@@ -98,7 +98,7 @@ class ConfigS3(BaseSettings):
         default=...,
         repr=True,
         title="s3 URL",
-        description="Should be in the format: s3://bucket/pathname",
+        description="Should be in format: s3://bucket/pathname",
         env="REPLICA_URL",
         regex=r"^s3:\/\/.*$",
         max_length=100,

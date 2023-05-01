@@ -1,3 +1,3 @@
-from .cli import group
+from pylts.cli import group
 
 group()
