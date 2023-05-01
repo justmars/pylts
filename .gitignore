@@ -1,6 +1,8 @@
 .DS_Store
 .ruff_cache
 .vscode
+nb.ipynb
+poetry.lock
 data/*
 
 # Byte-compiled / optimized / DLL files
