@@ -139,8 +139,7 @@ class ConfigS3(BaseSettings):
 
     @property
     def replicate_args(self) -> list[str]:
-        """When used in the command line `litestream replicate <dbpath> <replica_url>`
-        works. As a subprocess, we itemize each item for future use.
+        """Basic args: `litestream replicate <dbpath> <replica_url>` As a subprocess, we itemize each item for future use.
 
         Examples:
             >>> from pylts import ConfigS3
@@ -162,14 +161,13 @@ class ConfigS3(BaseSettings):
         return [
             "litestream",
             "replicate",
-            str(self.dbpath),  # path to loca
+            str(self.dbpath),  # path to local
             self.s3,  # where to replicate
         ]
 
     @property
     def restore_args(self) -> list[str]:
-        """When used in the command line `litestream restore -o <dbpath> <replica_url>`
-        works. As a subprocess, we itemize each item for future use.
+        """Basic args: `litestream restore -o <dbpath> <replica_url>`. As a subprocess, we itemize each item for future use.
 
         Examples:
             >>> from pylts import ConfigS3
@@ -201,7 +199,7 @@ class ConfigS3(BaseSettings):
     def restore(self) -> Path:
         """Runs the pre-configured litestream command (`@restore_args`) to restore the
         database from the replica url to the constructed database path at `@dbpath`.
-        No need to use a timeout here since after restoration, the command terminates.
+        No need to use a timeout here since, after restoration, the command terminates.
         This is unlike `self.timed_replicate()` which is continuously executed even
         after replication.
         """
