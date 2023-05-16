@@ -8,6 +8,6 @@ Pydantic wrapper around litestreamed database specific to an AWS bucket.
 
 See [documentation](https://mv3.dev/pylts).
 
-1. Run `poetry shell`
+1. Run `poetry install`
 2. Run `poetry update`
 3. Run `pytest`
